@@ -1,0 +1,39 @@
+﻿@page
+@model List<TicketSystem.Models.Ticket>
+
+<h2>Ticket Validation System</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Ticket</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Passenger</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TicketSystem.Models.Ticket ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Id</td>
+                <td>@ticket.PassengerName</td>
+                <td>@ticket.Destination</td>
+                <td>
+                    @(ticket.IsValid ? "Valid" : "Invalid/Used")
+                </td>
+                <td>
+                    @if (ticket.IsValid)
+                    {
+                        <form asp-action="Validate" asp-route-id="@ticket.Id" method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Validate (Use Ticket)</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
